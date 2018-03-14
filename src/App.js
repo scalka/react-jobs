@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Muse from './Muse';
 import GithubJobs from './GithubJobs';
+import Form from './Form';
 import {BrowserRouter, Route, Link} from 'react-router-dom';
 
 class App extends Component {
@@ -26,6 +27,8 @@ class App extends Component {
             <hr/>
             <Route exact path='/' component={Muse}/>
             <Route exact path='/about' component={GithubJobs}/>
+            <hr/>
+            <Form/>
           </div>
       </BrowserRouter>
     );
