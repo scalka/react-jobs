@@ -25,10 +25,9 @@ class App extends Component {
               <li><Link to="/contact">Contact Us</Link></li>
             </ul>
             <hr/>
-            <Route exact path='/' component={Muse}/>
+            <Route exact path='/' component={Form}/>
             <Route exact path='/about' component={GithubJobs}/>
             <hr/>
-            <Form/>
           </div>
       </BrowserRouter>
     );

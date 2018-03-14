@@ -11,7 +11,8 @@ class Form extends React.Component {
       category: 'Data Science',
       page: 0,
       level: '',
-      location: ''
+      location: '',
+      submit: false
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -32,12 +33,17 @@ class Form extends React.Component {
   }
 
   submitForm() {
-    return (
-      <Muse data={this.state} />
-    );
+    this.setState({
+      // if no square brackets around name - the value is hardcoded
+      // [name] => ][event.targer.name]  accesses object property name programatically
+      submit: true
+    });
   }
 
   render() {
+    if(this.state.submit === true) {
+      return ( < Muse data={this.state}/> )
+    }
     return (
       <div>
       <form>
@@ -80,7 +86,7 @@ class Form extends React.Component {
       </form>
       <h1>Hi, {this.state.name}! You have selected a {this.state.number} month contract {this.state.insurance ? 'with' : 'without'} insurance.</h1>
 
-      <button type="btn1" onClick={(e) => this.submitForm('up', e)}>UP</button>
+      <button type="btn1" onClick={(e) => this.submitForm()}>UP</button>
 
       </div>
     );

@@ -4,15 +4,15 @@ import JobsList from './Jobs/JobsList';
 const querystring = require('querystring');
 
 class Muse extends Component {
-  constructor() {
-		super();
+  constructor(props) {
+		super(props);
 		this.state = {
-      company: '',
+/*      company: '',
       category: 'Data Science',
       page: 0,
       level: '',
       location: '',
-      data: ''
+      data: ''*/
 		};
 		// This binding is necessary to make `this` work in the onclick callback
 		// this.handleClick = this.handleClick.bind(this);
@@ -21,7 +21,8 @@ class Muse extends Component {
     let config = require('./config.json');
     let museKey = config.museKey;
     let parameters = [];
-    for(let param in this.state) {
+    console.log(this.props.data);
+    for(let param in this.props) {
       if(`${this.state[param]}`) {
         console.log(`${this.state[param]}`);
         parameters[param] = `${this.state[param]}`
@@ -59,7 +60,10 @@ class Muse extends Component {
 
   render() {
     return (
-      <JobsList data={this.state.data} />
+      <div>
+        <p>SOmething</p>
+        <JobsList data={this.state.data} />
+      </div>
     );
   }
 }
