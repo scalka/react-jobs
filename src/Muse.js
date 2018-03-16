@@ -18,9 +18,13 @@ class Muse extends Component {
 		// this.handleClick = this.handleClick.bind(this);
 	}
   componentWillMount() {
+    console.log("componentWillMount");
+  }
+  componentDidMount() {
     let config = require('./config.json');
     let museKey = config.museKey;
     let parameters = [];
+    console.log("componentDidMount");
     console.log(this.props.data);
     for(let param in this.props) {
       if(`${this.state[param]}`) {
@@ -61,7 +65,7 @@ class Muse extends Component {
   render() {
     return (
       <div>
-        <p>SOmething</p>
+        <p>Something</p>
         <JobsList data={this.state.data} />
       </div>
     );

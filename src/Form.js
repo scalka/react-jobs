@@ -11,20 +11,19 @@ class Form extends React.Component {
       category: 'Data Science',
       page: 0,
       level: '',
-      location: '',
-      submit: false
+      location: ''
     };
 
-    this.handleInputChange = this.handleInputChange.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
-  handleInputChange(event) {
+  onChange(event) {
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
-
-		//console.log(`Input name ${name}. Input value ${value}.`);
-
+    // name the inputs to match their corresponding values in state
+		// console.log(`Input name ${name}. Input value ${value}.`);
     this.setState({
       // if no square brackets around name - the value is hardcoded
       // [name] => ][event.targer.name]  accesses object property name programatically
@@ -32,18 +31,12 @@ class Form extends React.Component {
     });
   }
 
-  submitForm() {
-    this.setState({
-      // if no square brackets around name - the value is hardcoded
-      // [name] => ][event.targer.name]  accesses object property name programatically
-      submit: true
-    });
+  onSubmit(event) {
+    event.preventDefault();
+    console.log("onSubmit");
   }
 
   render() {
-    if(this.state.submit === true) {
-      return ( < Muse data={this.state}/> )
-    }
     return (
       <div>
       <form>
@@ -52,8 +45,8 @@ class Form extends React.Component {
           <input
             name="category"
             type="text"
-            value={this.state.name}
-            onChange={this.handleInputChange} />
+            value={this.state.category}
+            onChange={this.onChange} />
         </label>
         <br />
         <label>
@@ -62,7 +55,7 @@ class Form extends React.Component {
             name="company"
             type="text"
             value={this.state.email}
-            onChange={this.handleInputChange} />
+            onChange={this.onChange} />
         </label>
         <br />
         <label>
@@ -71,7 +64,7 @@ class Form extends React.Component {
             name="level"
             type="text"
             value={this.state.number}
-            onChange={this.handleInputChange} />
+            onChange={this.onChange} />
         </label>
         <br />
         <label>
@@ -80,14 +73,13 @@ class Form extends React.Component {
             name="location"
             type="checkbox"
             checked={this.state.checked}
-            onChange={this.handleInputChange} />
+            onChange={this.onChange} />
         </label>
         <br />
+        <button type="submit">Submit</button>
+        <a onClick={this.props.callback}>Click me</a>
       </form>
-      <h1>Hi, {this.state.name}! You have selected a {this.state.number} month contract {this.state.insurance ? 'with' : 'without'} insurance.</h1>
-
-      <button type="btn1" onClick={(e) => this.submitForm()}>UP</button>
-
+      <h1>Hi, {this.state.category}! You have selected a {this.state.number} month contract {this.state.insurance ? 'with' : 'without'} insurance.</h1>
       </div>
     );
   }
