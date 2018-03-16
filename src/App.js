@@ -17,60 +17,65 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      category: 'Data Science',
+      category: '',
       page: 0,
-      jobs: []
+      company: '',
+      level: '',
+      location: '',
+      jobs: [],
+      params: []
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.fetchJobs = this.fetchJobs.bind(this);
   }
 
   componentWillMount() {
-    }
+  }
 
-    handleChange(event) {
-      // handle both of the <select> UI elements
-      const target = event.target;
-      const value = target.type === 'checkbox' ? target.checked : target.value;
-      const name = target.name;
+  handleChange(event) {
+    // handle both of the <select> UI elements
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+    console.log(value);
+    this.setState({
+      [name]: value
+    });
+  }
 
-      this.setState({
-        [name]: value
-      });
-    }
-
-    handleClick(event) {
-      let config = require('./config.json');
-      let museKey = config.museKey;
-      let parameters = [];
-      for(let param in this.state) {
-        if(`${this.state[param]}` && param !== 'jobs') {
-          console.log(param);
-          console.log(`${this.state[param]}`);
-          parameters[param] = `${this.state[param]}`
-        }
+  fetchJobs(event) {
+    console.log(this.state.category);
+    let config = require('./config.json');
+    let museKey = config.museKey;
+    let parameters = [];
+    for(let param in this.state) {
+      if(`${this.state[param]}` && param !== 'jobs') {
+        console.log(param);
+        console.log(`${this.state[param]}`);
+        parameters[param] = `${this.state[param]}`
       }
-      let request = querystring.stringify(parameters);
-      console.log(`https://api-v2.themuse.com/jobs?api_key=${museKey}&${request}`);
-
-      fetch(`https://api-v2.themuse.com/jobs?api_key=${museKey}&${request}`)
-      .then(response => {
-        if(response.ok) return response.json();
-        throw new Error('Request failed.');
-      })
-      .then(data => {
-        const jobs = data.results.map(job => {
-          return {
-            name: job.name
-          }
-        });
-        this.setState({jobs: jobs});
-      })
-      .catch(error => {
-        console.log(error);
-      });
     }
+    let request = querystring.stringify(parameters);
+    console.log(`https://api-v2.themuse.com/jobs?api_key=${museKey}&${request}`);
+
+    fetch(`https://api-v2.themuse.com/jobs?api_key=${museKey}&${request}`)
+    .then(response => {
+      if(response.ok) return response.json();
+      throw new Error('Request failed.');
+    })
+    .then(data => {
+      const jobs = data.results.map(job => {
+        return {
+          name: job.name
+        }
+      });
+      this.setState({jobs: jobs});
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
 
   render() {
     let jobList;
@@ -78,7 +83,7 @@ class App extends Component {
       console.log(this.state.jobs);
       jobList = this.state.jobs.map(job => {
         return (
-            <JobCard name={job.name}/>
+            <JobCard key={job.name} name={job.name}/>
         );
       });
     }
@@ -107,15 +112,17 @@ class App extends Component {
             <hr/>
           </div>
       </BrowserRouter>
-      <Form callback={this.handleClick} />
-      <section className="section">
-        <div className={this.state.contrastMode ? "notification is-success" : "notification"}>
-          <LabelledInput name="searchText" label="Search by name" value={this.state.searchText} handleChange={this.handleChange} placeholder={"e.g. alberto"} />
-    			<div className="columns is-multiline">
-            {jobList}
-    			</div>
-        </div>
 
+      <LabelledInput name="category" label="Search by category" value={this.state.category} handleChange={this.handleChange}/>
+      <LabelledInput name="company" label="Search by company" value={this.state.company} handleChange={this.handleChange}/>
+
+      <button name={this.props.name} className="button is-dark" onClick={this.fetchJobs}>Fetch</button>
+
+
+      <section className="section">
+      <div className="columns is-multiline">
+        {jobList}
+      </div>
       </section>
       </div>
     );

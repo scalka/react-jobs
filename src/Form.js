@@ -7,11 +7,7 @@ class Form extends React.Component {
     super(props);
     //the name of input must match state elemetns
     this.state = {
-      company: '',
-      category: 'Data Science',
-      page: 0,
-      level: '',
-      location: ''
+
     };
 
     this.onChange = this.onChange.bind(this);
@@ -37,6 +33,7 @@ class Form extends React.Component {
   }
 
   render() {
+
     return (
       <div>
       <form>
@@ -77,7 +74,7 @@ class Form extends React.Component {
         </label>
         <br />
         <button type="submit">Submit</button>
-        <a onClick={this.props.callback}>Click me</a>
+        <a onClick={this.props.callback} query={this.props.query}>Click me</a>
       </form>
       <h1>Hi, {this.state.category}! You have selected a {this.state.number} month contract {this.state.insurance ? 'with' : 'without'} insurance.</h1>
       </div>

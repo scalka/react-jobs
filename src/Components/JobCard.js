@@ -25,7 +25,6 @@ class JobCard extends React.Component {
             <div className="media">
               <div className="media-content">
                 <p className="title is-4">{this.props.name}</p>
-                {this.props.nat ? <p className="subtitle">{this.props.nat}</p> : null}
               </div>
             </div>
           </div>
