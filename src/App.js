@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Muse from './Muse';
 import GithubJobs from './GithubJobs';
-import Form from './Form';
 import {BrowserRouter, Route, Link} from 'react-router-dom';
 import JobCard from './Components/JobCard';
 import DropDown from './Components/DropDown';
@@ -22,8 +20,7 @@ class App extends Component {
       company: '',
       level: '',
       location: '',
-      jobs: [],
-      params: []
+      jobs: []
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -107,8 +104,6 @@ class App extends Component {
             </ul>
             <hr/>
             <Route exact path='/'/>
-            <Route exact path='/results' component={Muse}/>
-            <Route exact path='/about' component={GithubJobs}/>
             <hr/>
           </div>
       </BrowserRouter>
